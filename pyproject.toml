@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling", "skills-runner"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cumulus-weather-skills"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dynamic = ["dependencies", "scripts"]
+
+[tool.hatch.metadata.hooks.skills-runner]
+cli = "cumulus-weather-skills"
+
+[tool.hatch.build.hooks.skills-runner]
+
+[dependency-groups]
+dev = [
+    "pytest>=9",
+    "numpy",
+    "xarray",
+    "zarr",
+    "cftime",
+    "netcdf4",
+    "weather-skills-core>=0.3.6",
+    "fsspec",
+    "aiohttp",
+    "pandas",
+    "scipy",
+    "matplotlib>=3.8",
+    "pillow",
+    "adlfs",
+    "h5netcdf",
+    "h5py",
+]
+
+[tool.uv.sources]
+skills-runner = { git = "https://github.com/tescalada/skills-runner" }
+
+[tool.pytest.ini_options]
+testpaths = ["skills"]
+python_files = ["test_*.py"]
+pythonpath = ["tests"]
+filterwarnings = [
+    "ignore:Consolidated metadata is currently not part in the Zarr format 3 specification",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B", "UP"]
